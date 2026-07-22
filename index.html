@@ -3,96 +3,95 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Consultas Veterinarias Online | Atención 24/7</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Consulta Veterinaria Online en Español | Perros y Gatos</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Arial, sans-serif; }
+        body { color: #2c3e50; background-color: #f8f9fa; line-height: 1.6; }
+        
+        /* Header */
+        header { background: #ffffff; padding: 1rem 5%; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 10px rgba(0,0,0,0.05); sticky: top; }
+        .logo { font-size: 1.4rem; font-weight: bold; color: #16a085; text-decoration: none; }
+        nav a { margin-left: 1.5rem; text-decoration: none; color: #34495e; font-weight: 500; }
+        .btn-nav { background: #16a085; color: white !important; padding: 0.5rem 1rem; border-radius: 5px; }
+
+        /* Hero */
+        .hero { background: linear-gradient(135deg, #e8f8f5 0%, #ffffff 100%); padding: 4rem 5%; text-align: center; }
+        .hero h1 { font-size: 2.2rem; color: #2c3e50; margin-bottom: 1rem; }
+        .hero p { font-size: 1.1rem; color: #7f8c8d; max-width: 800px; margin: 0 auto 2rem; }
+        .btn-main { background: #16a085; color: white; padding: 0.8rem 1.8rem; text-decoration: none; font-weight: bold; border-radius: 5px; display: inline-block; }
+
+        /* Servicios */
+        .services { padding: 4rem 5%; max-width: 1100px; margin: 0 auto; }
+        .services h2 { text-align: center; margin-bottom: 2.5rem; color: #2c3e50; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; }
+        .card { background: white; padding: 2rem; border-radius: 8px; border-top: 4px solid #16a085; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+        .card h3 { margin-bottom: 1rem; color: #16a085; font-size: 1.2rem; }
+
+        /* Formulario */
+        .contact { background: #ffffff; padding: 4rem 5%; text-align: center; border-top: 1px solid #eee; }
+        .form-box { max-width: 500px; margin: 2rem auto 0; text-align: left; }
+        input, select, textarea { width: 100%; padding: 0.8rem; margin-bottom: 1rem; border: 1px solid #ccc; border-radius: 4px; }
+        button { width: 100%; background: #16a085; color: white; padding: 0.9rem; border: none; font-weight: bold; border-radius: 4px; cursor: pointer; }
+
+        /* Footer */
+        footer { background: #2c3e50; color: white; text-align: center; padding: 1.5rem; font-size: 0.9rem; }
+    </style>
 </head>
 <body>
 
-    <!-- Header / Navegación -->
-    <header class="navbar">
-        <div class="logo">Vet<span>Online</span></div>
+    <header>
+        <a href="#" class="logo">Consultas Veterinarias Online</a>
         <nav>
-            <ul>
-                <li><a href="#inicio">Inicio</a></li>
-                <li><a href="#servicios">Servicios</a></li>
-                <li><a href="#como-funciona">Cómo Funciona</a></li>
-                <li><a href="#contacto" class="btn-primary">Consultar Ahora</a></li>
-            </ul>
+            <a href="#servicios">Servicios</a>
+            <a href="#contacto" class="btn-nav">Agendar Consulta</a>
         </nav>
     </header>
 
-    <!-- Hero Section -->
-    <section id="inicio" class="hero">
-        <div class="hero-content">
-            <h1>Atención Veterinaria Profesional sin Salir de Casa</h1>
-            <p>Conecta con médicos veterinarios colegiados las 24 horas del día. Orientación rápida, sin esperas y desde cualquier dispositivo.</p>
-            <div class="hero-buttons">
-                <a href="#contacto" class="btn-primary">Iniciar Consulta 24/7</a>
-                <a href="#servicios" class="btn-secondary">Ver Servicios</a>
-            </div>
-        </div>
+    <section class="hero">
+        <h1>Consultas veterinarias online en español para propietarios de perros y gatos</h1>
+        <p>Segunda opinión veterinaria, revisión de exámenes, interpretación de radiografías y orientación profesional mediante videollamada para clientes de habla hispana en todo el mundo.</p>
+        <a href="#contacto" class="btn-main">Reservar Consulta Online</a>
     </section>
 
-    <!-- Características -->
-    <section class="features">
-        <div class="feature-card">
-            <h3>Disponibilidad 24/7</h3>
-            <p>Resuelve dudas inmediatas sobre la salud, síntomas o nutrición de tu mascota a cualquier hora.</p>
-        </div>
-        <div class="feature-card">
-            <h3>Sin Desplazamientos</h3>
-            <p>Ahorra estrés a tu mascota evaluando la situación antes de acudir a una clínica presencial.</p>
-        </div>
-        <div class="feature-card">
-            <h3>Veterinarios Certificados</h3>
-            <p>Atención cercana y profesional por parte de un equipo de profesionales cualificados.</p>
-        </div>
-    </section>
-
-    <!-- Servicios -->
     <section id="servicios" class="services">
-        <h2>Nuestros Servicios Online</h2>
-        <div class="services-grid">
-            <div class="service-box">
-                <h4>Videoconsulta</h4>
-                <p>Evaluación visual directa de tu mascota y diagnóstico de orientación general en tiempo real.</p>
+        <h2>Servicios Especializados</h2>
+        <div class="grid">
+            <div class="card">
+                <h3>Segunda Opinión</h3>
+                <p>Evaluación detallada de diagnósticos y tratamientos previos para ofrecerte claridad sobre la salud de tu perro o gato.</p>
             </div>
-            <div class="service-box">
-                <h4>Triage de Urgencias</h4>
-                <p>Aprende a identificar en menos de 2 minutos si el estado de tu perro o gato requiere urgencia presencial.</p>
+            <div class="card">
+                <h3>Revisión de Exámenes</h3>
+                <p>Interpretación técnica de análisis de sangre, radiografías y pruebas de laboratorio explicadas de forma sencilla.</p>
             </div>
-            <div class="service-box">
-                <h4>Orientación Nutricional</h4>
-                <p>Planes de alimentación adaptados según la edad, raza y condición médica específica.</p>
+            <div class="card">
+                <h3>Orientación por Videollamada</h3>
+                <p>Atención personalizada en español sin importar el país donde te encuentres, resolviendo dudas sin estrés de traslado.</p>
             </div>
         </div>
     </section>
 
-    <!-- Formulario de Contacto / Agendamiento -->
-    <section id="contacto" class="contact-section">
-        <div class="form-container">
-            <h2>Haz tu Consulta</h2>
-            <p>Completa el formulario y un especialista te atenderá en minutos.</p>
-            <form id="vetForm">
+    <section id="contacto" class="contact">
+        <h2>Agendar una Consulta</h2>
+        <p>Solicita orientación profesional para tu mascota completando los datos a continuación:</p>
+        <div class="form-box">
+            <form onsubmit="event.preventDefault(); alert('Solicitud enviada correctamente.');">
                 <input type="text" placeholder="Tu Nombre Completo" required>
                 <input type="email" placeholder="Correo Electrónico" required>
                 <select required>
-                    <option value="" disabled selected>Especie de tu mascota</option>
+                    <option value="" disabled selected>Tipo de Mascota</option>
                     <option value="perro">Perro</option>
                     <option value="gato">Gato</option>
-                    <option value="otro">Otro</option>
                 </select>
-                <textarea rows="4" placeholder="Describe los síntomas o motivo de la consulta..." required></textarea>
-                <button type="submit" class="btn-primary">Enviar Consulta</button>
+                <textarea rows="4" placeholder="Describe brevemente el caso o examen a revisar..." required></textarea>
+                <button type="submit">Enviar Solicitud</button>
             </form>
         </div>
     </section>
 
-    <!-- Footer -->
     <footer>
-        <p>&copy; 2026 Consultas Veterinarias Online. Todos los derechos reservados.</p>
+        <p>&copy; Consultas Veterinarias Online. Todos los derechos reservados.</p>
     </footer>
 
-    <script src="script.js"></script>
 </body>
 </html>
