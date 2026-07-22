@@ -3,95 +3,150 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Consulta Veterinaria Online en Español | Perros y Gatos</title>
+    <title>Consultas Veterinarias Online</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <!-- CSS de Calendly para ventana emergente -->
+    <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
+    
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Arial, sans-serif; }
-        body { color: #2c3e50; background-color: #f8f9fa; line-height: 1.6; }
-        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Open Sans', sans-serif; color: #666; background-color: #ffffff; line-height: 1.6; }
+
         /* Header */
-        header { background: #ffffff; padding: 1rem 5%; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 10px rgba(0,0,0,0.05); sticky: top; }
-        .logo { font-size: 1.4rem; font-weight: bold; color: #16a085; text-decoration: none; }
-        nav a { margin-left: 1.5rem; text-decoration: none; color: #34495e; font-weight: 500; }
-        .btn-nav { background: #16a085; color: white !important; padding: 0.5rem 1rem; border-radius: 5px; }
+        header { text-align: center; padding: 2.5rem 1rem 1.5rem; background: #fff; }
+        .logo { font-family: 'Montserrat', sans-serif; font-size: 2.8rem; font-weight: 800; color: #273b80; margin-bottom: 1.5rem; text-decoration: none; display: block; }
+        nav { display: flex; justify-content: center; gap: 0.5rem; }
+        nav a { font-family: 'Open Sans', sans-serif; text-decoration: none; font-size: 0.95rem; padding: 0.4rem 1rem; border-radius: 4px; color: #666; }
+        nav a.active { background-color: #273b80; color: #ffffff; font-weight: 600; }
 
         /* Hero */
-        .hero { background: linear-gradient(135deg, #e8f8f5 0%, #ffffff 100%); padding: 4rem 5%; text-align: center; }
-        .hero h1 { font-size: 2.2rem; color: #2c3e50; margin-bottom: 1rem; }
-        .hero p { font-size: 1.1rem; color: #7f8c8d; max-width: 800px; margin: 0 auto 2rem; }
-        .btn-main { background: #16a085; color: white; padding: 0.8rem 1.8rem; text-decoration: none; font-weight: bold; border-radius: 5px; display: inline-block; }
+        .hero { position: relative; background: linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.55)), url('https://images.unsplash.com/photo-1629909613654-28e377c37b09?q=80&w=1600&auto=format&fit=crop') center/cover no-repeat; color: #ffffff; text-align: center; padding: 6rem 1.5rem; }
+        .hero-content { max-width: 900px; margin: 0 auto; }
+        .hero h1 { font-family: 'Montserrat', sans-serif; font-size: 2.5rem; font-weight: 700; margin-bottom: 1.5rem; line-height: 1.2; }
+        .hero p { font-size: 1.05rem; margin-bottom: 2rem; opacity: 0.95; line-height: 1.6; font-weight: 400; }
 
-        /* Servicios */
-        .services { padding: 4rem 5%; max-width: 1100px; margin: 0 auto; }
-        .services h2 { text-align: center; margin-bottom: 2.5rem; color: #2c3e50; }
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; }
-        .card { background: white; padding: 2rem; border-radius: 8px; border-top: 4px solid #16a085; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
-        .card h3 { margin-bottom: 1rem; color: #16a085; font-size: 1.2rem; }
+        /* Buttons */
+        .btn-blue { display: inline-block; background-color: #273b80; color: #ffffff; text-decoration: none; padding: 0.75rem 1.8rem; font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 0.95rem; border-radius: 4px; transition: background 0.2s; border: none; cursor: pointer; }
+        .btn-blue:hover { background-color: #1c2b5e; }
 
-        /* Formulario */
-        .contact { background: #ffffff; padding: 4rem 5%; text-align: center; border-top: 1px solid #eee; }
-        .form-box { max-width: 500px; margin: 2rem auto 0; text-align: left; }
-        input, select, textarea { width: 100%; padding: 0.8rem; margin-bottom: 1rem; border: 1px solid #ccc; border-radius: 4px; }
-        button { width: 100%; background: #16a085; color: white; padding: 0.9rem; border: none; font-weight: bold; border-radius: 4px; cursor: pointer; }
+        /* General Sections */
+        .container { max-width: 1100px; margin: 0 auto; padding: 4rem 1.5rem; }
+        .section-title { font-family: 'Montserrat', sans-serif; font-size: 2.2rem; font-weight: 700; color: #273b80; margin-bottom: 0.8rem; }
+        .section-desc { font-size: 1rem; color: #666; max-width: 850px; margin-bottom: 3rem; }
 
-        /* Footer */
-        footer { background: #2c3e50; color: white; text-align: center; padding: 1.5rem; font-size: 0.9rem; }
+        /* Grid Services */
+        .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2.5rem; }
+        .service-card { display: flex; flex-direction: column; }
+        .service-card img { width: 100%; height: 260px; object-fit: cover; border-radius: 2px; margin-bottom: 1.5rem; }
+        .service-card h3 { font-family: 'Montserrat', sans-serif; font-size: 1.5rem; font-weight: 700; color: #273b80; margin-bottom: 1rem; }
+        .service-card p { font-size: 0.95rem; color: #666; margin-bottom: 1.5rem; flex-grow: 1; line-height: 1.6; }
+
+        /* Why Choose Us Section */
+        .why-us-section { background-color: #f4f5f7; padding: 4rem 1.5rem; }
+        .why-us-content { max-width: 1100px; margin: 0 auto; }
+        .checklist { list-style: none; margin-top: 1.5rem; }
+        .checklist li { font-size: 1rem; color: #555; margin-bottom: 1.2rem; display: flex; align-items: flex-start; gap: 0.6rem; }
+        .checklist li::before { content: "✓"; color: #777; font-weight: bold; }
+
+        /* Reserve Cita Section */
+        .reserve-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; }
+        .reserve-grid img { width: 100%; height: 100%; min-height: 350px; object-fit: cover; border-radius: 2px; }
+
+        @media (max-width: 768px) {
+            .logo { font-size: 2rem; }
+            .hero h1 { font-size: 1.8rem; }
+            .reserve-grid { grid-template-columns: 1fr; }
+        }
     </style>
 </head>
 <body>
 
+    <!-- Header -->
     <header>
         <a href="#" class="logo">Consultas Veterinarias Online</a>
         <nav>
-            <a href="#servicios">Servicios</a>
-            <a href="#contacto" class="btn-nav">Agendar Consulta</a>
+            <a href="#" class="active">Home</a>
+            <a href="#servicios">Our Services</a>
         </nav>
     </header>
 
+    <!-- Hero Section -->
     <section class="hero">
-        <h1>Consultas veterinarias online en español para propietarios de perros y gatos</h1>
-        <p>Segunda opinión veterinaria, revisión de exámenes, interpretación de radiografías y orientación profesional mediante videollamada para clientes de habla hispana en todo el mundo.</p>
-        <a href="#contacto" class="btn-main">Reservar Consulta Online</a>
+        <div class="hero-content">
+            <h1>Orientación Veterinaria Profesional para Perros y Gatos en Español</h1>
+            <p>Recibe orientación veterinaria profesional desde cualquier lugar. Ayudamos a propietarios de perros y gatos a comprender mejor los síntomas, tratamientos, exámenes de laboratorio, radiografías y otros estudios diagnósticos. También ofrecemos segunda opinión veterinaria y apoyo en la toma de decisiones para la salud de tu mascota.</p>
+            <button onclick="openCalendly()" class="btn-blue">Agendar Consulta</button>
+        </div>
     </section>
 
-    <section id="servicios" class="services">
-        <h2>Servicios Especializados</h2>
-        <div class="grid">
-            <div class="card">
-                <h3>Segunda Opinión</h3>
-                <p>Evaluación detallada de diagnósticos y tratamientos previos para ofrecerte claridad sobre la salud de tu perro o gato.</p>
+    <!-- Servicios Section -->
+    <section id="servicios" class="container">
+        <h2 class="section-title">Nuestros Servicios</h2>
+        <p class="section-desc">Ofrecemos consultas veterinarias online y segundas opiniones para propietarios de perros y gatos. Nuestro objetivo es ayudarte a comprender mejor los síntomas, exámenes y opciones de tratamiento de tu mascota desde la comodidad de tu hogar.</p>
+        
+        <div class="services-grid">
+            <!-- Servicio 1 -->
+            <div class="service-card">
+                <img src="https://images.unsplash.com/photo-1583511655857-d19b40a7a54e?q=80&w=800&auto=format&fit=crop" alt="Consulta Veterinaria Online">
+                <h3>Consulta Veterinaria Online</h3>
+                <p>Describe los síntomas de tu mascota y recibe orientación profesional por videollamada. Ideal para dudas sobre problemas digestivos, dermatológicos, comportamiento, nutrición y bienestar general.</p>
+                <div>
+                    <button onclick="openCalendly()" class="btn-blue">Agendar consulta</button>
+                </div>
             </div>
-            <div class="card">
-                <h3>Revisión de Exámenes</h3>
-                <p>Interpretación técnica de análisis de sangre, radiografías y pruebas de laboratorio explicadas de forma sencilla.</p>
-            </div>
-            <div class="card">
-                <h3>Orientación por Videollamada</h3>
-                <p>Atención personalizada en español sin importar el país donde te encuentres, resolviendo dudas sin estrés de traslado.</p>
+
+            <!-- Servicio 2 -->
+            <div class="service-card">
+                <img src="https://images.unsplash.com/photo-1576201836106-db1758fd1c97?q=80&w=800&auto=format&fit=crop" alt="Segunda Opinión Veterinaria">
+                <h3>Segunda Opinión Veterinaria</h3>
+                <p>¿Tienes dudas sobre un diagnóstico o tratamiento? Revisamos exámenes, radiografías, ecografías e informes médicos para ayudarte a tomar decisiones informadas sobre la salud de tu mascota.</p>
+                <div>
+                    <button onclick="openCalendly()" class="btn-blue">Agendar consulta</button>
+                </div>
             </div>
         </div>
     </section>
 
-    <section id="contacto" class="contact">
-        <h2>Agendar una Consulta</h2>
-        <p>Solicita orientación profesional para tu mascota completando los datos a continuación:</p>
-        <div class="form-box">
-            <form onsubmit="event.preventDefault(); alert('Solicitud enviada correctamente.');">
-                <input type="text" placeholder="Tu Nombre Completo" required>
-                <input type="email" placeholder="Correo Electrónico" required>
-                <select required>
-                    <option value="" disabled selected>Tipo de Mascota</option>
-                    <option value="perro">Perro</option>
-                    <option value="gato">Gato</option>
-                </select>
-                <textarea rows="4" placeholder="Describe brevemente el caso o examen a revisar..." required></textarea>
-                <button type="submit">Enviar Solicitud</button>
-            </form>
+    <!-- Por qué elegirnos Section -->
+    <section class="why-us-section">
+        <div class="why-us-content">
+            <h2 class="section-title">¿Por qué elegirnos?</h2>
+            <ul class="checklist">
+                <li>Atención personalizada en español</li>
+                <li>Más de 15 años de experiencia en medicina veterinaria de pequeños animales</li>
+                <li>Experiencia profesional en el sector veterinario en Canadá y Estados Unidos</li>
+                <li>Conocimiento de protocolos, medicamentos y estándares veterinarios utilizados en Norteamérica</li>
+                <li>Revisión de exámenes y estudios diagnósticos</li>
+                <li>Consultas cómodas mediante videollamada</li>
+                <li>Atención para propietarios de mascotas de habla hispana en todo el mundo</li>
+            </ul>
         </div>
     </section>
 
-    <footer>
-        <p>&copy; Consultas Veterinarias Online. Todos los derechos reservados.</p>
-    </footer>
+    <!-- Reserva tu cita Section -->
+    <section id="reservar" class="container">
+        <div class="reserve-grid">
+            <div>
+                <img src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?q=80&w=800&auto=format&fit=crop" alt="Veterinaria con auricular">
+            </div>
+            <div>
+                <h2 class="section-title">Reserva tu Cita Online</h2>
+                <p style="margin-bottom: 1.5rem;">Atención online para propietarios de mascotas de habla hispana en todo el mundo.</p>
+                <button onclick="openCalendly()" class="btn-blue">Agendar Consulta</button>
+            </div>
+        </div>
+    </section>
 
+    <!-- Script oficial de Calendly -->
+    <script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async></script>
+    <script>
+        function openCalendly() {
+            // Reemplaza esta URL con el enlace de tu propio evento de Calendly
+            Calendly.initPopupWidget({ url: 'https://calendly.com/tu-usuario/30min' });
+            return false;
+        }
+    </script>
 </body>
 </html>
