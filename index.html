@@ -4,154 +4,198 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Consultas Veterinarias Online</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
-    <!-- CSS de Calendly para ventana emergente -->
-    <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
-    
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Open Sans', sans-serif; color: #666; background-color: #ffffff; line-height: 1.6; }
+        :root {
+            --primary-color: #2b5b84;
+            --secondary-color: #4a90e2;
+            --accent-color: #e67e22;
+            --bg-light: #f8f9fa;
+            --text-color: #333333;
+        }
 
-        /* Header */
-        header { text-align: center; padding: 2.5rem 1rem 1.5rem; background: #fff; }
-        .logo { font-family: 'Montserrat', sans-serif; font-size: 2.8rem; font-weight: 800; color: #273b80; margin-bottom: 1.5rem; text-decoration: none; display: block; }
-        nav { display: flex; justify-content: center; gap: 0.5rem; }
-        nav a { font-family: 'Open Sans', sans-serif; text-decoration: none; font-size: 0.95rem; padding: 0.4rem 1rem; border-radius: 4px; color: #666; }
-        nav a.active { background-color: #273b80; color: #ffffff; font-weight: 600; }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
 
-        /* Hero */
-        .hero { position: relative; background: linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.55)), url('https://images.unsplash.com/photo-1629909613654-28e377c37b09?q=80&w=1600&auto=format&fit=crop') center/cover no-repeat; color: #ffffff; text-align: center; padding: 6rem 1.5rem; }
-        .hero-content { max-width: 900px; margin: 0 auto; }
-        .hero h1 { font-family: 'Montserrat', sans-serif; font-size: 2.5rem; font-weight: 700; margin-bottom: 1.5rem; line-height: 1.2; }
-        .hero p { font-size: 1.05rem; margin-bottom: 2rem; opacity: 0.95; line-height: 1.6; font-weight: 400; }
+        body {
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--bg-light);
+        }
 
-        /* Buttons */
-        .btn-blue { display: inline-block; background-color: #273b80; color: #ffffff; text-decoration: none; padding: 0.75rem 1.8rem; font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 0.95rem; border-radius: 4px; transition: background 0.2s; border: none; cursor: pointer; }
-        .btn-blue:hover { background-color: #1c2b5e; }
+        header {
+            background-color: #ffffff;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
 
-        /* General Sections */
-        .container { max-width: 1100px; margin: 0 auto; padding: 4rem 1.5rem; }
-        .section-title { font-family: 'Montserrat', sans-serif; font-size: 2.2rem; font-weight: 700; color: #273b80; margin-bottom: 0.8rem; }
-        .section-desc { font-size: 1rem; color: #666; max-width: 850px; margin-bottom: 3rem; }
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+        }
 
-        /* Grid Services */
-        .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2.5rem; }
-        .service-card { display: flex; flex-direction: column; }
-        .service-card img { width: 100%; height: 260px; object-fit: cover; border-radius: 2px; margin-bottom: 1.5rem; }
-        .service-card h3 { font-family: 'Montserrat', sans-serif; font-size: 1.5rem; font-weight: 700; color: #273b80; margin-bottom: 1rem; }
-        .service-card p { font-size: 0.95rem; color: #666; margin-bottom: 1.5rem; flex-grow: 1; line-height: 1.6; }
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            text-decoration: none;
+        }
 
-        /* Why Choose Us Section */
-        .why-us-section { background-color: #f4f5f7; padding: 4rem 1.5rem; }
-        .why-us-content { max-width: 1100px; margin: 0 auto; }
-        .checklist { list-style: none; margin-top: 1.5rem; }
-        .checklist li { font-size: 1rem; color: #555; margin-bottom: 1.2rem; display: flex; align-items: flex-start; gap: 0.6rem; }
-        .checklist li::before { content: "✓"; color: #777; font-weight: bold; }
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 1.5rem;
+        }
 
-        /* Reserve Cita Section */
-        .reserve-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; }
-        .reserve-grid img { width: 100%; height: 100%; min-height: 350px; object-fit: cover; border-radius: 2px; }
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
 
-        @media (max-width: 768px) {
-            .logo { font-size: 2rem; }
-            .hero h1 { font-size: 1.8rem; }
-            .reserve-grid { grid-template-columns: 1fr; }
+        .nav-links a:hover {
+            color: var(--secondary-color);
+        }
+
+        .btn-schedule {
+            background-color: var(--accent-color);
+            color: white;
+            padding: 0.6rem 1.2rem;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            cursor: pointer;
+            border: none;
+            transition: background 0.3s;
+        }
+
+        .btn-schedule:hover {
+            background-color: #d35400;
+        }
+
+        .hero {
+            background: linear-gradient(rgba(43, 91, 132, 0.8), rgba(43, 91, 132, 0.8)), url('https://images.unsplash.com/photo-1576201836106-db1758fd1c97?auto=format&fit=crop&w=1200&q=80') center/cover;
+            color: white;
+            text-align: center;
+            padding: 5rem 2rem;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto 2rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 3rem auto;
+            padding: 0 2rem;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: var(--primary-color);
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .service-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            text-align: center;
+        }
+
+        .service-card h3 {
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+
+        footer {
+            background-color: var(--primary-color);
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 4rem;
         }
     </style>
 </head>
 <body>
 
-    <!-- Header -->
     <header>
-        <a href="#" class="logo">Consultas Veterinarias Online</a>
         <nav>
-            <a href="#" class="active">Home</a>
-            <a href="#servicios">Our Services</a>
+            <a href="#" class="logo">Consultas Veterinarias Online</a>
+            <ul class="nav-links">
+                <li><a href="#inicio">Inicio</a></li>
+                <li><a href="#servicios">Servicios</a></li>
+                <li><a href="#contacto">Contacto</a></li>
+            </ul>
+            <button class="btn-schedule" onclick="openCalendly()">Agendar Consulta</button>
         </nav>
     </header>
 
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="hero-content">
-            <h1>Orientación Veterinaria Profesional para Perros y Gatos en Español</h1>
-            <p>Recibe orientación veterinaria profesional desde cualquier lugar. Ayudamos a propietarios de perros y gatos a comprender mejor los síntomas, tratamientos, exámenes de laboratorio, radiografías y otros estudios diagnósticos. También ofrecemos segunda opinión veterinaria y apoyo en la toma de decisiones para la salud de tu mascota.</p>
-            <button onclick="openCalendly()" class="btn-blue">Agendar Consulta</button>
-        </div>
+    <section id="inicio" class="hero">
+        <h1>Atención Veterinaria Profesional desde Casa</h1>
+        <p>Atención personalizada por videollamada para perros y gatos. Evaluación de síntomas, revisión de exámenes, orientación y segundas opiniones.</p>
+        <button class="btn-schedule" onclick="openCalendly()">Agendar Cita ($30 USD)</button>
     </section>
 
-    <!-- Servicios Section -->
     <section id="servicios" class="container">
         <h2 class="section-title">Nuestros Servicios</h2>
-        <p class="section-desc">Ofrecemos consultas veterinarias online y segundas opiniones para propietarios de perros y gatos. Nuestro objetivo es ayudarte a comprender mejor los síntomas, exámenes y opciones de tratamiento de tu mascota desde la comodidad de tu hogar.</p>
-        
         <div class="services-grid">
-            <!-- Servicio 1 -->
             <div class="service-card">
-                <img src="https://images.unsplash.com/photo-1583511655857-d19b40a7a54e?q=80&w=800&auto=format&fit=crop" alt="Consulta Veterinaria Online">
-                <h3>Consulta Veterinaria Online</h3>
-                <p>Describe los síntomas de tu mascota y recibe orientación profesional por videollamada. Ideal para dudas sobre problemas digestivos, dermatológicos, comportamiento, nutrición y bienestar general.</p>
-                <div>
-                    <button onclick="openCalendly()" class="btn-blue">Agendar consulta</button>
-                </div>
+                <h3>Consulta General</h3>
+                <p>Orientación sobre síntomas leves, cambios de conducta, dudas de alimentación y cuidados preventivos para tu mascota.</p>
             </div>
-
-            <!-- Servicio 2 -->
             <div class="service-card">
-                <img src="https://images.unsplash.com/photo-1576201836106-db1758fd1c97?q=80&w=800&auto=format&fit=crop" alt="Segunda Opinión Veterinaria">
-                <h3>Segunda Opinión Veterinaria</h3>
-                <p>¿Tienes dudas sobre un diagnóstico o tratamiento? Revisamos exámenes, radiografías, ecografías e informes médicos para ayudarte a tomar decisiones informadas sobre la salud de tu mascota.</p>
-                <div>
-                    <button onclick="openCalendly()" class="btn-blue">Agendar consulta</button>
-                </div>
+                <h3>Lectura de Exámenes</h3>
+                <p>Análisis y explicación detallada de exámenes de sangre, radiografías, ecografías u otros estudios previos.</p>
+            </div>
+            <div class="service-card">
+                <h3>Segunda Opinión</h3>
+                <p>Aclaración de diagnósticos, revisión de tratamientos prescritos y recomendación de pasos a seguir.</p>
             </div>
         </div>
     </section>
 
-    <!-- Por qué elegirnos Section -->
-    <section class="why-us-section">
-        <div class="why-us-content">
-            <h2 class="section-title">¿Por qué elegirnos?</h2>
-            <ul class="checklist">
-                <li>Atención personalizada en español</li>
-                <li>Más de 15 años de experiencia en medicina veterinaria de pequeños animales</li>
-                <li>Experiencia profesional en el sector veterinario en Canadá y Estados Unidos</li>
-                <li>Conocimiento de protocolos, medicamentos y estándares veterinarios utilizados en Norteamérica</li>
-                <li>Revisión de exámenes y estudios diagnósticos</li>
-                <li>Consultas cómodas mediante videollamada</li>
-                <li>Atención para propietarios de mascotas de habla hispana en todo el mundo</li>
-            </ul>
-        </div>
-    </section>
+    <footer id="contacto">
+        <p>&copy; 2026 Consultas Veterinarias Online. Todos los derechos reservados.</p>
+    </footer>
 
-    <!-- Reserva tu cita Section -->
-    <section id="reservar" class="container">
-        <div class="reserve-grid">
-            <div>
-                <img src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?q=80&w=800&auto=format&fit=crop" alt="Veterinaria con auricular">
-            </div>
-            <div>
-                <h2 class="section-title">Reserva tu Cita Online</h2>
-                <p style="margin-bottom: 1.5rem;">Atención online para propietarios de mascotas de habla hispana en todo el mundo.</p>
-                <button onclick="openCalendly()" class="btn-blue">Agendar Consulta</button>
-            </div>
-        </div>
-    </section>
+    <!-- Integración del calendario Cal.com -->
+    <script type="text/javascript">
+      (function (C, A, L) { let p = function (a, ar) { a.q.push(ar); }; let d = C.document; C.Cal = C.Cal || function () { let cal = C.Cal; let ar = arguments; if (!cal.loaded) { cal.ns = {}; cal.q = cal.q || []; d.head.appendChild(d.createElement("script")).src = A; cal.loaded = true; } if (ar[0] === L) { const api = function () { p(api, arguments); }; const namespace = ar[1]; api.q = api.q || []; if(typeof namespace === "string"){cal.ns[namespace] = cal.ns[namespace] || api;p(cal.ns[namespace], ar);p(cal, ["initNamespace", namespace]);} else p(cal, ar); return;} p(cal, ar); }; })(window, "https://app.cal.com/embed/embed.js", "init");
+      
+      Cal("init", {origin:"https://app.cal.com"});
 
-   <!-- Cal element-click embed code begins -->
-<script type="text/javascript">
-  (function (C, A, L) { let p = function (a, ar) { a.q.push(ar); }; let d = C.document; C.Cal = C.Cal || function () { let cal = C.Cal; let ar = arguments; if (!cal.loaded) { cal.ns = {}; cal.q = cal.q || []; d.head.appendChild(d.createElement("script")).src = A; cal.loaded = true; } if (ar[0] === L) { const api = function () { p(api, arguments); }; const namespace = ar[1]; api.q = api.q || []; if(typeof namespace === "string"){cal.ns[namespace] = cal.ns[namespace] || api;p(cal.ns[namespace], ar);p(cal, ["initNamespace", namespace]);} else p(cal, ar); return;} p(cal, ar); }; })(window, "https://app.cal.com/embed/embed.js", "init");
-Cal("init", "30min", {origin:"https://app.cal.com"});
-Cal.config = Cal.config || {};
-Cal.config.forwardQueryParams = true;
-
-  
-  // Important: Please add the following attributes to the element that should trigger the calendar to open upon clicking.
-  // `data-cal-link="consultas-veterinarias-ruvfzr/30min"`
-  // data-cal-namespace="30min"
-  // `data-cal-config='{"layout":"month_view","useSlotsViewOnSmallScreen":"true"}'`
-
-  Cal.ns["30min"]("ui", {"hideEventTypeDetails":false,"layout":"month_view"});
-  </script>
-  <!-- Cal element-click embed code ends -->
+      function openCalendly() {
+          Cal("modal", {
+              calLink: "consultas-veterinarias-ruvfzr/30min",
+              config: {"layout":"month_view"}
+          });
+          return false;
+      }
+    </script>
+</body>
+</html>
