@@ -1,362 +1,186 @@
 <!DOCTYPE html>
-<html lang="es-MX">
+<html lang="es">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-  <title>Consulta Veterinaria Online en Español | Perros y Gatos</title>
-  <meta name="description" content="Consultas veterinarias online en español para propietarios de perros y gatos. Segunda opinión veterinaria, revisión de exámenes y orientación profesional mediante videollamada.">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Consultas Veterinarias Online</title>
 
-  <!-- Carga del SDK de Stripe -->
-  <script src="https://js.stripe.com/v3/"></script>
-
-  <!-- Tipografías de Google Fonts -->
+  <!-- Tipografía Montserrat/Open Sans similar a Webador -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+
+  <!-- Widget oficial de Calendly (Abre la agenda directamente) -->
+  <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
+  <script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async></script>
 
   <style>
     :root {
-      --primary-color: #2b3a4a;
-      --accent-color: #27ae60;
-      --stripe-btn-color: #635bff;
-      --text-color: #333333;
-      --bg-light: #f8f9fa;
+      --primary-blue: #1d3b8a;
+      --text-dark: #2c3e50;
+      --text-gray: #666666;
+      --bg-light: #f4f6f9;
     }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Open Sans', sans-serif; color: var(--text-dark); line-height: 1.6; }
+    h1, h2, h3 { font-family: 'Montserrat', sans-serif; color: var(--primary-blue); font-weight: 700; }
 
-    body {
-      font-family: 'Roboto', sans-serif;
-      color: var(--text-color);
-      line-height: 1.6;
-      background-color: #ffffff;
-    }
-
-    h1, h2, h3 {
-      font-family: 'Montserrat', sans-serif;
-    }
-
-    /* Encabezado y Menú */
-    header {
-      background: #ffffff;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-    }
-
-    .nav-container {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 1.2rem 2rem;
-    }
-
-    .logo {
-      font-size: 1.3rem;
-      font-weight: 700;
-      color: var(--primary-color);
+    /* Header y Navegación */
+    header { text-align: center; padding: 2.5rem 1rem 1rem 1rem; background: #fff; }
+    .site-title { font-size: 2.8rem; font-weight: 800; margin-bottom: 1.5rem; }
+    nav { display: flex; justify-content: center; gap: 0.5rem; }
+    .nav-btn {
       text-decoration: none;
+      padding: 0.5rem 1.2rem;
+      font-size: 0.95rem;
+      border-radius: 4px;
+      font-weight: 600;
+      color: var(--text-gray);
     }
+    .nav-btn.active { background-color: var(--primary-blue); color: #fff; }
 
-    .nav-menu {
-      display: flex;
-      list-style: none;
-      gap: 2rem;
-    }
-
-    .nav-menu a {
-      text-decoration: none;
-      color: var(--text-color);
-      font-weight: 500;
-    }
-
-    /* Banner Principal (Hero) */
+    /* Hero Section */
     .hero {
       position: relative;
-      background: linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.55)), 
+      background: linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45)), 
                   url('https://primary.jwwb.nl/pexels/62/6235657.jpeg') center/cover no-repeat;
-      color: #ffffff;
+      color: #fff;
       text-align: center;
-      padding: 6rem 2rem;
+      padding: 5rem 2rem;
     }
+    .hero-content { max-width: 900px; margin: 0 auto; }
+    .hero h1 { color: #fff; font-size: 2.3rem; margin-bottom: 1.5rem; line-height: 1.3; }
+    .hero p { font-size: 1.05rem; margin-bottom: 2rem; opacity: 0.95; }
 
-    .hero-content {
-      max-width: 900px;
-      margin: 0 auto;
-    }
-
-    .hero h1 {
-      font-size: 2.2rem;
-      margin-bottom: 1.5rem;
-      line-height: 1.3;
-    }
-
-    .hero p {
-      font-size: 1.1rem;
-      margin-bottom: 2rem;
-      font-weight: 400;
-    }
-
-    .btn-main {
+    /* Botón Azul principal */
+    .btn-blue {
       display: inline-block;
-      background-color: var(--accent-color);
-      color: #ffffff;
-      padding: 0.8rem 2rem;
-      border-radius: 6px;
+      background-color: var(--primary-blue);
+      color: #fff;
+      padding: 0.75rem 1.8rem;
+      border-radius: 4px;
       text-decoration: none;
       font-weight: 700;
       font-size: 1rem;
       border: none;
       cursor: pointer;
-      transition: background 0.3s ease;
+      transition: background 0.2s;
     }
+    .btn-blue:hover { background-color: #142a63; }
 
-    .btn-main:hover {
-      background-color: #219150;
-    }
+    /* Sección Servicios Grid */
+    .section-container { max-width: 1100px; margin: 0 auto; padding: 4rem 1.5rem; }
+    .section-title { font-size: 2.2rem; margin-bottom: 0.8rem; }
+    .section-intro { color: var(--text-gray); max-width: 850px; margin-bottom: 3rem; font-size: 1rem; }
 
-    /* Sección de Servicios */
-    .services-section {
-      padding: 4rem 2rem;
-      max-width: 1200px;
-      margin: 0 auto;
-    }
+    .grid-2x2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(450px, 1fr)); gap: 3rem 2.5rem; }
+    @media (max-width: 600px) { .grid-2x2 { grid-template-columns: 1fr; } }
 
-    .services-section h2 {
-      text-align: center;
-      font-size: 2rem;
-      color: var(--primary-color);
-      margin-bottom: 1rem;
-    }
+    .card img { width: 100%; height: 260px; object-fit: cover; border-radius: 2px; margin-bottom: 1.2rem; }
+    .card h3 { font-size: 1.5rem; margin-bottom: 0.8rem; }
+    .card p { color: var(--text-gray); font-size: 0.95rem; margin-bottom: 1.2rem; min-height: 70px; }
 
-    .services-intro {
-      text-align: center;
-      max-width: 800px;
-      margin: 0 auto 3rem auto;
-      color: #555;
-    }
+    /* Sección ¿Por qué elegirnos? */
+    .why-us { background-color: var(--bg-light); padding: 4rem 1.5rem; }
+    .why-us-content { max-width: 1100px; margin: 0 auto; }
+    .why-us ul { list-style: none; margin-top: 1.5rem; }
+    .why-us li { font-size: 1.05rem; color: #444; margin-bottom: 1rem; display: flex; align-items: center; }
+    .why-us li::before { content: "✓"; color: var(--primary-blue); font-weight: bold; margin-right: 10px; font-size: 1.2rem; }
 
-    .services-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 2.5rem;
-    }
-
-    .service-card {
-      background: #ffffff;
-      border-radius: 8px;
-      overflow: hidden;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.06);
-      display: flex;
-      flex-direction: column;
-    }
-
-    .service-card img {
-      width: 100%;
-      height: 220px;
-      object-fit: cover;
-    }
-
-    .card-body {
-      padding: 1.8rem;
-      display: flex;
-      flex-direction: column;
-      flex-grow: 1;
-    }
-
-    .card-body h3 {
-      font-size: 1.3rem;
-      color: var(--primary-color);
-      margin-bottom: 1rem;
-    }
-
-    .card-body p {
-      color: #666;
-      font-size: 0.95rem;
-      margin-bottom: 1.5rem;
-      flex-grow: 1;
-    }
-
-    .btn-small {
-      display: inline-block;
-      background-color: var(--accent-color);
-      color: #ffffff;
-      padding: 0.6rem 1.2rem;
-      border-radius: 4px;
-      text-decoration: none;
-      font-weight: 700;
-      font-size: 0.9rem;
-      text-align: center;
-      border: none;
-      cursor: pointer;
-    }
-
-    /* Modal emergente para Stripe */
-    .modal {
-      display: none;
-      position: fixed;
-      z-index: 2000;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0,0,0,0.6);
-      justify-content: center;
-      align-items: center;
-    }
-
-    .modal-content {
-      background-color: #ffffff;
-      padding: 2.5rem;
-      border-radius: 10px;
-      max-width: 480px;
-      width: 90%;
-      text-align: center;
-      position: relative;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-    }
-
-    .close-btn {
-      position: absolute;
-      right: 20px;
-      top: 15px;
-      font-size: 1.8rem;
-      cursor: pointer;
-      color: #aaa;
-    }
-
-    .btn-stripe {
-      background-color: var(--stripe-btn-color);
-      color: #ffffff;
-      width: 100%;
-      padding: 0.9rem;
-      border: none;
-      border-radius: 6px;
-      font-size: 1.05rem;
-      font-weight: 700;
-      cursor: pointer;
-      margin-top: 1.5rem;
-    }
-
-    footer {
-      background: var(--primary-color);
-      color: #ffffff;
-      text-align: center;
-      padding: 2rem;
-      margin-top: 4rem;
-      font-size: 0.9rem;
-    }
+    /* Sección Info & Contacto */
+    .info-split { display: flex; flex-wrap: wrap; gap: 3rem; align-items: center; padding-top: 4rem; }
+    .info-split img { flex: 1; min-width: 300px; max-width: 500px; width: 100%; border-radius: 2px; }
+    .info-split .info-text { flex: 1; min-width: 300px; }
+    .info-text h3 { font-size: 1.4rem; margin-top: 1.5rem; margin-bottom: 0.5rem; }
+    .info-text p { color: var(--text-gray); font-size: 0.95rem; }
   </style>
 </head>
 <body>
 
-  <!-- Navegación -->
+  <!-- Encabezado -->
   <header>
-    <div class="nav-container">
-      <a href="#" class="logo">Consultas Veterinarias Online</a>
-      <ul class="nav-menu">
-        <li><a href="#inicio">Inicio</a></li>
-        <li><a href="#servicios">Nuestros Servicios</a></li>
-      </ul>
-    </div>
+    <div class="site-title">Consultas Veterinarias Online</div>
+    <nav>
+      <a href="index.html" class="nav-btn active">Home</a>
+      <a href="our-services.html" class="nav-btn">Our Services</a>
+    </nav>
   </header>
 
-  <!-- Banner Principal -->
-  <section class="hero" id="inicio">
+  <!-- Banner Hero -->
+  <section class="hero">
     <div class="hero-content">
       <h1>Orientación Veterinaria Profesional para Perros y Gatos en Español</h1>
       <p>Recibe orientación veterinaria profesional desde cualquier lugar. Ayudamos a propietarios de perros y gatos a comprender mejor los síntomas, tratamientos, exámenes de laboratorio, radiografías y otros estudios diagnósticos. También ofrecemos segunda opinión veterinaria y apoyo en la toma de decisiones para la salud de tu mascota.</p>
-      <button class="btn-main" onclick="openCheckout()">Agendar Consulta</button>
+      <button class="btn-blue" onclick="Calendly.initPopupWidget({url: 'https://calendly.com/consultaveterinariaenlinea/30min'});return false;">Agendar Consulta</button>
     </div>
   </section>
 
-  <!-- Sección de Servicios -->
-  <section class="services-section" id="servicios">
-    <h2>Nuestros Servicios</h2>
-    <p class="services-intro">Ofrecemos consultas veterinarias online y segundas opiniones para propietarios de perros y gatos. Nuestro objetivo es ayudarte a comprender mejor los síntomas, exámenes y opciones de tratamiento de tu mascota desde la comodidad de tu hogar.</p>
+  <!-- Nuestros Servicios Grid -->
+  <section class="section-container">
+    <h2 class="section-title">Nuestros Servicios</h2>
+    <p class="section-intro">Ofrecemos consultas veterinarias online y segundas opiniones para propietarios de perros y gatos. Nuestro objetivo es ayudarte a comprender mejor los síntomas, exámenes y opciones de tratamiento de tu mascota desde la comodidad de tu hogar.</p>
 
-    <div class="services-grid">
-      <!-- Tarjeta 1 -->
-      <div class="service-card">
+    <div class="grid-2x2">
+      <div class="card">
         <img src="https://primary.jwwb.nl/pexels/89/8939517.jpeg" alt="Consulta Veterinaria Online">
-        <div class="card-body">
-          <h3>Consulta Veterinaria Online</h3>
-          <p>Describe los síntomas de tu mascota y recibe orientación profesional por videollamada. Ideal para dudas sobre problemas digestivos, dermatológicos, comportamiento, nutrición y bienestar general.</p>
-          <button class="btn-small" onclick="openCheckout()">Agendar consulta</button>
-        </div>
+        <h3>Consulta Veterinaria Online</h3>
+        <p>Describe los síntomas de tu mascota y recibe orientación profesional por videollamada. Ideal para dudas sobre problemas digestivos, dermatológicos, comportamiento, nutrición y bienestar general.</p>
+        <button class="btn-blue" onclick="Calendly.initPopupWidget({url: 'https://calendly.com/consultaveterinariaenlinea/30min'});return false;">Agendar consulta</button>
       </div>
 
-      <!-- Tarjeta 2 -->
-      <div class="service-card">
-        <img src="https://primary.jwwb.nl/pexels/71/7195319.jpeg" alt="Segunda Opinión Veterinaria">
-        <div class="card-body">
-          <h3>Segunda Opinión Veterinaria</h3>
-          <p>¿Tienes dudas sobre un diagnóstico o tratamiento? Revisamos exámenes, radiografías, ecografías e informes médicos para ayudarte a tomar decisiones informadas sobre la salud de tu mascota.</p>
-          <button class="btn-small" onclick="openCheckout()">Agendar consulta</button>
-        </div>
+      <div class="card">
+        <img src="https://primary.jwwb.nl/pexels/71/7195319.jpeg" alt="Segunda Opinión">
+        <h3>Segunda Opinión Veterinaria</h3>
+        <p>¿Tienes dudas sobre un diagnóstico o tratamiento? Revisamos exámenes, radiografías, ecografías e informes médicos para ayudarte a tomar decisiones informadas sobre la salud de tu mascota.</p>
+        <button class="btn-blue" onclick="Calendly.initPopupWidget({url: 'https://calendly.com/consultaveterinariaenlinea/30min'});return false;">Agendar consulta</button>
       </div>
 
-      <!-- Tarjeta 3 -->
-      <div class="service-card">
+      <div class="card">
         <img src="https://primary.jwwb.nl/pexels/52/5215005.jpeg" alt="Revisión de Exámenes">
-        <div class="card-body">
-          <h3>Revisión de Exámenes</h3>
-          <p>Interpretación de hemogramas, química sanguínea, radiografías y otros estudios diagnósticos enviados por el propietario.</p>
-          <button class="btn-small" onclick="openCheckout()">Agendar consulta</button>
-        </div>
+        <h3>Revisión de Exámenes</h3>
+        <p>Interpretación de hemogramas, química sanguínea, radiografías y otros estudios diagnósticos enviados por el propietario.</p>
+        <button class="btn-blue" onclick="Calendly.initPopupWidget({url: 'https://calendly.com/consultaveterinariaenlinea/30min'});return false;">Agendar consulta</button>
+      </div>
+
+      <div class="card">
+        <img src="https://primary.jwwb.nl/pexels/40/406014/991edcc9d115ee8b19e07833bf0ae5bf.jpeg" alt="Educación para Propietarios">
+        <h3>Educación y Orientación para Propietarios</h3>
+        <p>Aprende a comprender mejor los síntomas, tratamientos, cuidados preventivos y necesidades de tu mascota. Nuestro objetivo es ayudarte a tomar decisiones informadas para mejorar su bienestar y calidad de vida.</p>
+        <button class="btn-blue" onclick="Calendly.initPopupWidget({url: 'https://calendly.com/consultaveterinariaenlinea/30min'});return false;">Agendar consulta</button>
       </div>
     </div>
   </section>
 
-  <!-- Ventana emergente para Pago (Modal) -->
-  <div id="checkout-modal" class="modal">
-    <div class="modal-content">
-      <span class="close-btn" onclick="closeCheckout()">&times;</span>
-      <h2 style="color: var(--primary-color);">Confirmar Cita Veterinaria</h2>
-      <p style="margin-top: 10px; color: #555;">Duración: 30 minutos (vía Google Meet)</p>
-      <h3 style="margin-top: 15px; color: var(--accent-color); font-size: 1.8rem;">Total: $30.00 USD</h3>
-      
-      <button id="stripe-checkout-btn" class="btn-stripe">Pagar con Tarjeta</button>
+  <!-- ¿Por qué elegirnos? -->
+  <section class="why-us">
+    <div class="why-us-content">
+      <h2 class="section-title">¿Por qué elegirnos?</h2>
+      <ul>
+        <li>Atención personalizada en español</li>
+        <li>Más de 15 años de experiencia en medicina veterinaria de pequeños animales</li>
+        <li>Experiencia profesional en el sector veterinario en Canadá y Estados Unidos</li>
+        <li>Conocimiento de protocolos, medicamentos y estándares veterinarios utilizados en Norteamérica</li>
+        <li>Revisión de exámenes y estudios diagnósticos</li>
+        <li>Consultas cómodas mediante videollamada</li>
+        <li>Atención para propietarios de mascotas de habla hispana en todo el mundo</li>
+      </ul>
+
+      <div class="info-split">
+        <img src="https://primary.jwwb.nl/pexels/71/7195232.jpeg" alt="Veterinaria atendiendo">
+        <div class="info-text">
+          <h3>Reserva tu Cita Online</h3>
+          <p>Atención online para propietarios de mascotas de habla hispana en todo el mundo.</p>
+
+          <h3>Disponibilidad de Citas</h3>
+          <p>Horarios mostrados automáticamente según tu zona horaria.</p>
+
+          <h3>Contacto:</h3>
+          <p><a href="mailto:consultaveterinariaenlinea@gmail.com" style="color: var(--text-gray);">consultaveterinariaenlinea@gmail.com</a></p>
+        </div>
+      </div>
     </div>
-  </div>
-
-  <!-- Pie de página -->
-  <footer>
-    <p>&copy; 2026 Consultas Veterinarias Online. Todos los derechos reservados.</p>
-  </footer>
-
-  <!-- Script de Pago con Stripe -->
-  <script>
-    function openCheckout() {
-      document.getElementById('checkout-modal').style.display = 'flex';
-    }
-
-    function closeCheckout() {
-      document.getElementById('checkout-modal').style.display = 'none';
-    }
-
-    const stripe = Stripe('pk_live_51TwBDzHpeiwBwnBp9yKfpE0bJRGnPTRPWrqCCnbOSkJV6HSPTYvsJQqgZW0tlouLUFKHCSbEs8lG7xHqH4IEELb0009AFDUUg0');
-
-    document.getElementById('stripe-checkout-btn').addEventListener('click', async () => {
-      const { error } = await stripe.redirectToCheckout({
-        lineItems: [{ price: 'TU_PRICE_ID_AQUI', quantity: 1 }],
-        mode: 'payment',
-        successUrl: window.location.origin + '/exito.html',
-        cancelUrl: window.location.origin + '/cancelado.html',
-      });
-
-      if (error) {
-        alert("Error al abrir la pasarela de pago: " + error.message);
-      }
-    });
-  </script>
+  </section>
 
 </body>
 </html>
