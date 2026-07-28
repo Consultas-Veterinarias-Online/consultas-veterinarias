@@ -3,64 +3,210 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Pagar Servicio</title>
-  <!-- 1. Carga del SDK oficial de Stripe -->
+  <title>Consultas Veterinarias Online</title>
+  
+  <!-- Carga de Stripe -->
   <script src="https://js.stripe.com/v3/"></script>
+
   <style>
+    :root {
+      --primary-color: #2b3a4a;
+      --accent-color: #635bff;
+      --text-color: #333;
+      --bg-color: #f8f9fa;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
     body {
       font-family: system-ui, -apple-system, sans-serif;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      background-color: #f4f6f8;
-      margin: 0;
+      color: var(--text-color);
+      background-color: var(--bg-color);
+      line-height: 1.6;
     }
-    .card {
+
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 1rem 2rem;
+      background: #ffffff;
+    }
+
+    .logo {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: var(--primary-color);
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      list-style: none;
+      gap: 1.5rem;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--text-color);
+      font-weight: 500;
+    }
+
+    .hero {
+      background: linear-gradient(rgba(43, 58, 74, 0.8), rgba(43, 58, 74, 0.8)), url('https://images.unsplash.com/photo-1576201836106-db1758fd1c97?auto=format&fit=crop&w=1200&q=80') center/cover;
+      color: white;
+      text-align: center;
+      padding: 5rem 2rem;
+    }
+
+    .hero h1 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 3rem auto;
+      padding: 0 2rem;
+    }
+
+    .section-title {
+      text-align: center;
+      margin-bottom: 2rem;
+      color: var(--primary-color);
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+    }
+
+    .service-card {
       background: white;
       padding: 2rem;
-      border-radius: 10px;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    }
+
+    .service-card h3 {
+      margin-bottom: 0.5rem;
+      color: var(--primary-color);
+    }
+
+    .checkout-box {
+      background: white;
+      padding: 2rem;
+      border-radius: 8px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-      max-width: 400px;
-      width: 100%;
+      max-width: 450px;
+      margin: 3rem auto;
       text-align: center;
     }
-    .btn-pay {
-      background-color: #635bff;
+
+    .checkout-box h3 {
+      margin-bottom: 1rem;
+      color: var(--primary-color);
+    }
+
+    .price-tag {
+      font-size: 1.8rem;
+      font-weight: bold;
+      color: #2e7d32;
+      margin: 1rem 0;
+    }
+
+    .btn-stripe {
+      background-color: var(--accent-color);
       color: white;
+      padding: 0.8rem 1.5rem;
       border: none;
-      padding: 12px 24px;
-      font-size: 16px;
-      font-weight: 600;
-      border-radius: 6px;
+      border-radius: 5px;
+      font-size: 1rem;
+      font-weight: bold;
       cursor: pointer;
       width: 100%;
-      margin-top: 15px;
-      transition: background 0.2s;
+      transition: background 0.3s;
     }
-    .btn-pay:hover {
-      background-color: #0a2540;
+
+    .btn-stripe:hover {
+      background-color: #4b45c6;
+    }
+
+    footer {
+      background: var(--primary-color);
+      color: white;
+      text-align: center;
+      padding: 2rem;
+      margin-top: 4rem;
     }
   </style>
 </head>
 <body>
 
-  <div class="card">
-    <h2>Servicios Profesionales</h2>
-    <p>Haz clic en el botón para ser redirigido a la pantalla de pago segura de Stripe.</p>
-    
-    <!-- Botón de Pago -->
-    <button id="pay-button" class="btn-pay">Pagar Ahora</button>
+  <!-- Navegación -->
+  <nav>
+    <a href="#" class="logo">Consultas Veterinarias Online</a>
+    <ul class="nav-links">
+      <li><a href="#inicio">Inicio</a></li>
+      <li><a href="#servicios">Servicios</a></li>
+      <li><a href="#pagar">Agendar Cita</a></li>
+    </ul>
+  </nav>
+
+  <!-- Banner Principal -->
+  <section class="hero" id="inicio">
+    <h1>Atención Veterinaria Profesional desde Casa</h1>
+    <p>Atención personalizada por videollamada para perros y gatos.</p>
+  </section>
+
+  <!-- Sección Servicios -->
+  <div class="container" id="servicios">
+    <h2 class="section-title">Nuestros Servicios</h2>
+    <div class="services-grid">
+      <div class="service-card">
+        <h3>Consulta General</h3>
+        <p>Orientación sobre síntomas leves, cambios de conducta, dudas de alimentación y cuidados preventivos.</p>
+      </div>
+      <div class="service-card">
+        <h3>Lectura de Exámenes</h3>
+        <p>Análisis y explicación detallada de exámenes de sangre, radiografías o ecografías.</p>
+      </div>
+      <div class="service-card">
+        <h3>Segunda Opinión</h3>
+        <p>Aclaración de diagnósticos y revisión de tratamientos vigentes.</p>
+      </div>
+    </div>
   </div>
 
+  <!-- Caja de Pago -->
+  <div class="container" id="pagar">
+    <div class="checkout-box">
+      <h3>Confirmar Cita Veterinaria</h3>
+      <p>Duración: 30 minutos (vía Google Meet)</p>
+      <div class="price-tag">Total: $30.00 USD</div>
+      
+      <!-- Botón que activa Stripe -->
+      <button id="stripe-button" class="btn-stripe">Pagar y Agendar Cita</button>
+    </div>
+  </div>
+
+  <!-- Pie de página -->
+  <footer>
+    <p>&copy; 2026 Consultas Veterinarias Online. Todos los derechos reservados.</p>
+  </footer>
+
+  <!-- Código JavaScript que se conecta a Stripe -->
   <script>
-    // 2. Inicialización con tu clave pública
     const stripe = Stripe('pk_live_51TwBDzHpeiwBwnBp9yKfpE0bJRGnPTRPWrqCCnbOSkJV6HSPTYvsJQqgZW0tlouLUFKHCSbEs8lG7xHqH4IEELb0009AFDUUg0');
 
-    const payButton = document.getElementById('pay-button');
-
-    payButton.addEventListener('click', async () => {
-      // Reemplaza 'price_XXXXX' con el ID del precio que creaste en tu panel de Stripe
+    document.getElementById('stripe-button').addEventListener('click', async () => {
       const { error } = await stripe.redirectToCheckout({
         lineItems: [{ price: 'TU_PRICE_ID_AQUI', quantity: 1 }],
         mode: 'payment',
@@ -69,214 +215,10 @@
       });
 
       if (error) {
-        console.error("Error en el pago:", error.message);
-        alert("Hubo un problema al procesar el pago.");
+        alert("Hubo un error al redirigir al pago: " + error.message);
       }
     });
   </script>
 
-</body>
-</html>
-        nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 1rem 2rem;
-        }
-
-        .logo {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: var(--primary-color);
-            text-decoration: none;
-        }
-
-        .nav-links {
-            display: flex;
-            list-style: none;
-            gap: 1.5rem;
-        }
-
-        .nav-links a {
-            text-decoration: none;
-            color: var(--text-color);
-            font-weight: 500;
-        }
-
-        .btn-schedule {
-            background-color: var(--accent-color);
-            color: white;
-            padding: 0.6rem 1.2rem;
-            border-radius: 5px;
-            text-decoration: none;
-            font-weight: bold;
-            cursor: pointer;
-            border: none;
-        }
-
-        .hero {
-            background: linear-gradient(rgba(43, 91, 132, 0.8), rgba(43, 91, 132, 0.8)), url('https://images.unsplash.com/photo-1576201836106-db1758fd1c97?auto=format&fit=crop&w=1200&q=80') center/cover;
-            color: white;
-            text-align: center;
-            padding: 5rem 2rem;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 3rem auto;
-            padding: 0 2rem;
-        }
-
-        .section-title {
-            text-align: center;
-            margin-bottom: 2rem;
-            color: var(--primary-color);
-        }
-
-        .services-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2rem;
-        }
-
-        .service-card {
-            background: white;
-            padding: 2rem;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-            text-align: center;
-        }
-
-        /* Modal para el pago y reserva */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 2000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0,0,0,0.5);
-            justify-content: center;
-            align-items: center;
-        }
-
-        .modal-content {
-            background-color: white;
-            padding: 2rem;
-            border-radius: 8px;
-            max-width: 500px;
-            width: 90%;
-            text-align: center;
-            position: relative;
-        }
-
-        .close-btn {
-            position: absolute;
-            right: 15px;
-            top: 10px;
-            font-size: 1.5rem;
-            cursor: pointer;
-        }
-
-        #paypal-button-container {
-            margin-top: 1.5rem;
-        }
-
-        footer {
-            background-color: var(--primary-color);
-            color: white;
-            text-align: center;
-            padding: 2rem;
-            margin-top: 4rem;
-        }
-    </style>
-</head>
-<body>
-
-    <header>
-        <nav>
-            <a href="#" class="logo">Consultas Veterinarias Online</a>
-            <ul class="nav-links">
-                <li><a href="#inicio">Inicio</a></li>
-                <li><a href="#servicios">Servicios</a></li>
-                <li><a href="#contacto">Contacto</a></li>
-            </ul>
-            <button class="btn-schedule" onclick="openPaymentModal()">Agendar Consulta</button>
-        </nav>
-    </header>
-
-    <section id="inicio" class="hero">
-        <h1>Atención Veterinaria Profesional desde Casa</h1>
-        <p>Atención personalizada por videollamada para perros y gatos. Evaluación de síntomas, revisión de exámenes, orientación y segundas opiniones.</p>
-        <button class="btn-schedule" onclick="openPaymentModal()">Agendar Cita</button>
-    </section>
-
-    <section id="servicios" class="container">
-        <h2 class="section-title">Nuestros Servicios</h2>
-        <div class="services-grid">
-            <div class="service-card">
-                <h3>Consulta General</h3>
-                <p>Orientación sobre síntomas leves, cambios de conducta, dudas de alimentación y cuidados preventivos.</p>
-            </div>
-            <div class="service-card">
-                <h3>Lectura de Exámenes</h3>
-                <p>Análisis y explicación detallada de exámenes de sangre, radiografías o ecografías.</p>
-            </div>
-            <div class="service-card">
-                <h3>Segunda Opinión</h3>
-                <p>Aclaración de diagnósticos y revisión de tratamientos prescritos.</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- Modal de Pago -->
-    <div id="paymentModal" class="modal">
-        <div class="modal-content">
-            <span class="close-btn" onclick="closePaymentModal()">&times;</span>
-            <h2>Confirmar Cita Veterinaria</h2>
-            <p>Duración: 30 minutos (vía Google Meet)</p>
-            <p><strong>Total: $30.00 USD</strong></p>
-            
-            <div id="paypal-button-container"></div>
-        </div>
-    </div>
-
-    <footer id="contacto">
-        <p>&copy; 2026 Consultas Veterinarias Online. Todos los derechos reservados.</p>
-    </footer>
-
-    <script>
-        function openPaymentModal() {
-            document.getElementById('paymentModal').style.display = 'flex';
-        }
-
-        function closePaymentModal() {
-            document.getElementById('paymentModal').style.display = 'none';
-        }
-
-        // Configuración oficial del botón de PayPal
-        paypal.Buttons({
-            createOrder: function(data, actions) {
-                return actions.order.create({
-                    purchase_units: [{
-                        amount: {
-                            value: '30.00'
-                        },
-                        description: 'Consulta Veterinaria Online - 30 Minutos'
-                    }]
-                });
-            },
-            onApprove: function(data, actions) {
-                return actions.order.capture().then(function(details) {
-                    alert('¡Pago completado con éxito por ' + details.payer.name.given_name + '! Redirigiendo para seleccionar el horario de tu cita...');
-                    // Redirige a tu agenda de Cal.com después de pagar
-                    window.location.href = "https://cal.com/consultas-veterinarias-ruvfzr/30min";
-                });
-            }
-        }).render('#paypal-button-container');
-    </script>
 </body>
 </html>
