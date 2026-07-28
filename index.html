@@ -1,41 +1,82 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Consultas Veterinarias Online</title>
-    <!-- Carga del SDK de PayPal con tu Client ID -->
-    <script src="https://www.paypal.com/sdk/js?client-id=AUVBJMkVMPQSLUtTKQ12srFTnOyCZhGB7tvlhVIE9yEGhtAeRP8aGxsNUre0Oyut4Bo18VYf-APraHEr&currency=USD"></script>
-    <style>
-        :root {
-            --primary-color: #2b5b84;
-            --secondary-color: #4a90e2;
-            --accent-color: #e67e22;
-            --bg-light: #f8f9fa;
-            --text-color: #333333;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pagar Servicio</title>
+  <!-- 1. Carga del SDK oficial de Stripe -->
+  <script src="https://js.stripe.com/v3/"></script>
+  <style>
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background-color: #f4f6f8;
+      margin: 0;
+    }
+    .card {
+      background: white;
+      padding: 2rem;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      max-width: 400px;
+      width: 100%;
+      text-align: center;
+    }
+    .btn-pay {
+      background-color: #635bff;
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      font-size: 16px;
+      font-weight: 600;
+      border-radius: 6px;
+      cursor: pointer;
+      width: 100%;
+      margin-top: 15px;
+      transition: background 0.2s;
+    }
+    .btn-pay:hover {
+      background-color: #0a2540;
+    }
+  </style>
+</head>
+<body>
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
+  <div class="card">
+    <h2>Servicios Profesionales</h2>
+    <p>Haz clic en el botón para ser redirigido a la pantalla de pago segura de Stripe.</p>
+    
+    <!-- Botón de Pago -->
+    <button id="pay-button" class="btn-pay">Pagar Ahora</button>
+  </div>
 
-        body {
-            line-height: 1.6;
-            color: var(--text-color);
-            background-color: var(--bg-light);
-        }
+  <script>
+    // 2. Inicialización con tu clave pública
+    const stripe = Stripe('pk_live_51TwBDzHpeiwBwnBp9yKfpE0bJRGnPTRPWrqCCnbOSkJV6HSPTYvsJQqgZW0tlouLUFKHCSbEs8lG7xHqH4IEELb0009AFDUUg0');
 
-        header {
-            background-color: #ffffff;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
+    const payButton = document.getElementById('pay-button');
 
+    payButton.addEventListener('click', async () => {
+      // Reemplaza 'price_XXXXX' con el ID del precio que creaste en tu panel de Stripe
+      const { error } = await stripe.redirectToCheckout({
+        lineItems: [{ price: 'TU_PRICE_ID_AQUI', quantity: 1 }],
+        mode: 'payment',
+        successUrl: window.location.origin + '/exito.html',
+        cancelUrl: window.location.origin + '/cancelado.html',
+      });
+
+      if (error) {
+        console.error("Error en el pago:", error.message);
+        alert("Hubo un problema al procesar el pago.");
+      }
+    });
+  </script>
+
+</body>
+</html>
         nav {
             display: flex;
             justify-content: space-between;
