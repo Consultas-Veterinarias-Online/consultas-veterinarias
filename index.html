@@ -236,7 +236,7 @@
 
     document.getElementById('stripe-checkout-btn').addEventListener('click', async () => {
       const { error } = await stripe.redirectToCheckout({
-        lineItems: [{ price: 'b1f98f2f60c2e6c6b992efe31622916d69ea452b', quantity: 1 }],
+        lineItems: [{ price: '90fb265e5407c73bebcec94ec9b63609cf21dda1', quantity: 1 }],
         mode: 'payment',
         successUrl: window.location.origin + '/exito.html',
         cancelUrl: window.location.origin + '/cancelado.html',
