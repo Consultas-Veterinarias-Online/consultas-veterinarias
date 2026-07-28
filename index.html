@@ -10,10 +10,11 @@
 
   <style>
     :root {
-      --primary-color: #2b3a4a;
+      --primary-color: #2c3e50;
+      --secondary-color: #27ae60;
       --accent-color: #635bff;
-      --text-color: #333;
-      --bg-color: #f8f9fa;
+      --light-bg: #f8f9fa;
+      --dark-text: #2c3e50;
     }
 
     * {
@@ -23,24 +24,32 @@
     }
 
     body {
-      font-family: system-ui, -apple-system, sans-serif;
-      color: var(--text-color);
-      background-color: var(--bg-color);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      color: var(--dark-text);
+      background-color: #ffffff;
       line-height: 1.6;
+    }
+
+    /* Encabezado */
+    header {
+      background: #ffffff;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
     }
 
     nav {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      max-width: 1200px;
+      max-width: 1100px;
       margin: 0 auto;
       padding: 1rem 2rem;
-      background: #ffffff;
     }
 
     .logo {
-      font-size: 1.5rem;
+      font-size: 1.4rem;
       font-weight: bold;
       color: var(--primary-color);
       text-decoration: none;
@@ -49,194 +58,203 @@
     .nav-links {
       display: flex;
       list-style: none;
-      gap: 1.5rem;
+      gap: 2rem;
+      align-items: center;
     }
 
     .nav-links a {
       text-decoration: none;
-      color: var(--text-color);
+      color: var(--dark-text);
       font-weight: 500;
     }
 
-    .btn-schedule {
-      background-color: var(--accent-color);
+    .btn-header {
+      background-color: var(--secondary-color);
       color: white;
       padding: 0.6rem 1.2rem;
-      border-radius: 5px;
+      border-radius: 6px;
       text-decoration: none;
-      font-weight: bold;
-      cursor: pointer;
+      font-weight: 600;
       border: none;
+      cursor: pointer;
     }
 
+    /* Banner Principal */
     .hero {
-      background: linear-gradient(rgba(43, 91, 132, 0.8), rgba(43, 91, 132, 0.8)), url('https://images.unsplash.com/photo-1576201836106-db1758fd1c97?auto=format&fit=crop&w=1200&q=80') center/cover;
-      color: white;
+      background: linear-gradient(135deg, #eef2f3 0%, #8e9eab 100%);
+      padding: 4rem 2rem;
       text-align: center;
-      padding: 5rem 2rem;
+    }
+
+    .hero-content {
+      max-width: 800px;
+      margin: 0 auto;
     }
 
     .hero h1 {
-      font-size: 2.5rem;
+      font-size: 2.2rem;
+      color: var(--primary-color);
       margin-bottom: 1rem;
     }
 
-    .container {
-      max-width: 1200px;
-      margin: 3rem auto;
-      padding: 0 2rem;
+    .hero p {
+      font-size: 1.1rem;
+      margin-bottom: 2rem;
+      color: #4a5568;
     }
 
-    .section-title {
+    /* Servicios */
+    .services {
+      padding: 4rem 2rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .services h2 {
       text-align: center;
-      margin-bottom: 2rem;
+      font-size: 1.8rem;
+      margin-bottom: 3rem;
       color: var(--primary-color);
     }
 
-    .services-grid {
+    .grid-services {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
       gap: 2rem;
     }
 
-    .service-card {
-      background: white;
-      padding: 2rem;
+    .card {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
       border-radius: 8px;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+      padding: 2rem;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.02);
     }
 
-    .service-card h3 {
-      margin-bottom: 0.5rem;
+    .card h3 {
       color: var(--primary-color);
+      margin-bottom: 1rem;
     }
 
-    /* Modal de Confirmación y Pago */
-    .modal {
-      display: flex;
-      position: fixed;
-      z-index: 2000;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0,0,0,0.5);
-      justify-content: center;
-      align-items: center;
-    }
-
-    .modal-content {
-      background-color: white;
-      padding: 2rem;
-      border-radius: 8px;
-      max-width: 500px;
-      width: 90%;
+    /* Caja de Pago */
+    .pricing-section {
+      background-color: var(--light-bg);
+      padding: 4rem 2rem;
       text-align: center;
-      position: relative;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
     }
 
-    .close-btn {
-      position: absolute;
-      right: 15px;
-      top: 10px;
-      font-size: 1.5rem;
-      cursor: pointer;
-      color: #aaa;
+    .pricing-card {
+      background: white;
+      border-radius: 12px;
+      padding: 2.5rem;
+      max-width: 450px;
+      margin: 0 auto;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+      border: 2px solid var(--secondary-color);
     }
 
-    .btn-pay-stripe {
-      background-color: #635bff;
-      color: white;
-      border: none;
-      padding: 12px 20px;
-      font-size: 16px;
+    .price {
+      font-size: 2.5rem;
       font-weight: bold;
-      border-radius: 6px;
-      cursor: pointer;
+      color: var(--secondary-color);
+      margin: 1rem 0;
+    }
+
+    .btn-pay {
+      background-color: var(--accent-color);
+      color: white;
       width: 100%;
+      padding: 1rem;
+      border: none;
+      border-radius: 6px;
+      font-size: 1.1rem;
+      font-weight: bold;
+      cursor: pointer;
       margin-top: 1.5rem;
       transition: background 0.2s;
     }
 
-    .btn-pay-stripe:hover {
+    .btn-pay:hover {
       background-color: #4b45c6;
     }
 
+    /* Pie de página */
     footer {
-      background: var(--primary-color);
+      background-color: var(--primary-color);
       color: white;
       text-align: center;
       padding: 2rem;
-      margin-top: 4rem;
+      font-size: 0.9rem;
     }
   </style>
 </head>
 <body>
 
   <!-- Navegación -->
-  <nav>
-    <a href="#" class="logo">Consultas Veterinarias Online</a>
-    <ul class="nav-links">
-      <li><a href="#inicio">Inicio</a></li>
-      <li><a href="#servicios">Servicios</a></li>
-      <li><a href="#contacto">Contacto</a></li>
-    </ul>
-    <button class="btn-schedule" onclick="document.getElementById('checkout-modal').style.display='flex'">Agendar Consulta</button>
-  </nav>
+  <header>
+    <nav>
+      <a href="#" class="logo">Consultas Veterinarias Online</a>
+      <ul class="nav-links">
+        <li><a href="#servicios">Servicios</a></li>
+        <li><a href="#agendar">Agendar Cita</a></li>
+      </ul>
+      <a href="#agendar" class="btn-header">Agendar Consulta</a>
+    </nav>
+  </header>
 
-  <!-- Banner Hero -->
-  <section class="hero" id="inicio">
-    <h1>Atención Veterinaria Profesional desde Casa</h1>
-    <p>Atención personalizada por videollamada para perros y gatos. Evaluación de síntomas, revisión de exámenes, orientación y segundas opiniones.</p>
-    <br>
-    <button class="btn-schedule" onclick="document.getElementById('checkout-modal').style.display='flex'">Agendar Cita</button>
+  <!-- Banner Principal -->
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Atención Veterinaria Profesional desde Casa</h1>
+      <p>Atención personalizada por videollamada para perros y gatos. Evaluación de síntomas, revisión de exámenes, orientación médica y segundas opiniones.</p>
+    </div>
   </section>
 
-  <!-- Nuestros Servicios -->
-  <div class="container" id="servicios">
-    <h2 class="section-title">Nuestros Servicios</h2>
-    <div class="services-grid">
-      <div class="service-card">
+  <!-- Servicios -->
+  <section class="services" id="servicios">
+    <h2>Nuestros Servicios</h2>
+    <div class="grid-services">
+      <div class="card">
         <h3>Consulta General</h3>
-        <p>Orientación sobre síntomas leves, cambios de conducta, dudas de alimentación y cuidados preventivos.</p>
+        <p>Orientación sobre síntomas leves, cambios de conducta, dudas de alimentación y cuidados preventivos para tu mascota.</p>
       </div>
-      <div class="service-card">
+      <div class="card">
         <h3>Lectura de Exámenes</h3>
-        <p>Análisis y explicación detallada de exámenes de sangre, radiografías o ecografías.</p>
+        <p>Análisis y explicación detallada de exámenes de sangre, radiografías o ecografías previamente realizadas.</p>
       </div>
-      <div class="service-card">
+      <div class="card">
         <h3>Segunda Opinión</h3>
-        <p>Aclaración de diagnósticos y revisión de tratamientos vigentes.</p>
+        <p>Aclaración de diagnósticos complejos y revisión detallada de tratamientos o medicamentos vigentes.</p>
       </div>
     </div>
-  </div>
+  </section>
 
-  <!-- Modal emergente para Pago y Confirmación -->
-  <div id="checkout-modal" class="modal">
-    <div class="modal-content">
-      <span class="close-btn" onclick="document.getElementById('checkout-modal').style.display='none'">&times;</span>
+  <!-- Bloque de Pago -->
+  <section class="pricing-section" id="agendar">
+    <div class="pricing-card">
       <h2>Confirmar Cita Veterinaria</h2>
-      <p style="margin-top: 10px;">Duración: 30 minutos (vía Google Meet)</p>
-      <h3 style="margin-top: 15px; color: #2e7d32;">Total: $30.00 USD</h3>
+      <p>Duración: 30 minutos (vía Google Meet)</p>
+      <div class="price">$30.00 USD</div>
+      <p style="font-size: 0.9rem; color: #666;">Pago seguro procesado por Stripe</p>
       
-      <!-- Botón conectado a Stripe -->
-      <button id="stripe-checkout-btn" class="btn-pay-stripe">Pagar con Tarjeta</button>
+      <!-- Botón de Pago Stripe -->
+      <button id="stripe-pay-btn" class="btn-pay">Pagar $30.00 USD y Agendar</button>
     </div>
-  </div>
+  </section>
 
   <!-- Pie de página -->
-  <footer id="contacto">
+  <footer>
     <p>&copy; 2026 Consultas Veterinarias Online. Todos los derechos reservados.</p>
   </footer>
 
-  <!-- Script para Procesar Pago con Stripe -->
+  <!-- Script de Stripe -->
   <script>
     const stripe = Stripe('pk_live_51TwBDzHpeiwBwnBp9yKfpE0bJRGnPTRPWrqCCnbOSkJV6HSPTYvsJQqgZW0tlouLUFKHCSbEs8lG7xHqH4IEELb0009AFDUUg0');
 
-    document.getElementById('stripe-checkout-btn').addEventListener('click', async () => {
+    document.getElementById('stripe-pay-btn').addEventListener('click', async () => {
+      // Reemplaza 'price_XXXXX' con el Price ID de tu producto en Stripe
       const { error } = await stripe.redirectToCheckout({
-        lineItems: [{ price: '90fb265e5407c73bebcec94ec9b63609cf21dda1', quantity: 1 }],
+        lineItems: [{ price: 'TU_PRICE_ID_AQUI', quantity: 1 }],
         mode: 'payment',
         successUrl: window.location.origin + '/exito.html',
         cancelUrl: window.location.origin + '/cancelado.html',
