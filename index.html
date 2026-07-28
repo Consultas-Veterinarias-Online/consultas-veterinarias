@@ -1,20 +1,26 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es-MX">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Consultas Veterinarias Online</title>
-  
-  <!-- SDK de Stripe -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <title>Consulta Veterinaria Online en Español | Perros y Gatos</title>
+  <meta name="description" content="Consultas veterinarias online en español para propietarios de perros y gatos. Segunda opinión veterinaria, revisión de exámenes y orientación profesional mediante videollamada.">
+
+  <!-- Carga del SDK de Stripe -->
   <script src="https://js.stripe.com/v3/"></script>
+
+  <!-- Tipografías de Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 
   <style>
     :root {
-      --primary-color: #2c3e50;
-      --secondary-color: #27ae60;
-      --accent-color: #635bff;
-      --light-bg: #f8f9fa;
-      --dark-text: #2c3e50;
+      --primary-color: #2b3a4a;
+      --accent-color: #27ae60;
+      --stripe-btn-color: #635bff;
+      --text-color: #333333;
+      --bg-light: #f8f9fa;
     }
 
     * {
@@ -24,166 +30,227 @@
     }
 
     body {
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      color: var(--dark-text);
-      background-color: #ffffff;
+      font-family: 'Roboto', sans-serif;
+      color: var(--text-color);
       line-height: 1.6;
+      background-color: #ffffff;
     }
 
-    /* Encabezado */
+    h1, h2, h3 {
+      font-family: 'Montserrat', sans-serif;
+    }
+
+    /* Encabezado y Menú */
     header {
       background: #ffffff;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
       position: sticky;
       top: 0;
       z-index: 1000;
     }
 
-    nav {
+    .nav-container {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      max-width: 1100px;
+      max-width: 1200px;
       margin: 0 auto;
-      padding: 1rem 2rem;
+      padding: 1.2rem 2rem;
     }
 
     .logo {
-      font-size: 1.4rem;
-      font-weight: bold;
+      font-size: 1.3rem;
+      font-weight: 700;
       color: var(--primary-color);
       text-decoration: none;
     }
 
-    .nav-links {
+    .nav-menu {
       display: flex;
       list-style: none;
       gap: 2rem;
-      align-items: center;
     }
 
-    .nav-links a {
+    .nav-menu a {
       text-decoration: none;
-      color: var(--dark-text);
+      color: var(--text-color);
       font-weight: 500;
     }
 
-    .btn-header {
-      background-color: var(--secondary-color);
-      color: white;
-      padding: 0.6rem 1.2rem;
-      border-radius: 6px;
-      text-decoration: none;
-      font-weight: 600;
-      border: none;
-      cursor: pointer;
-    }
-
-    /* Banner Principal */
+    /* Banner Principal (Hero) */
     .hero {
-      background: linear-gradient(135deg, #eef2f3 0%, #8e9eab 100%);
-      padding: 4rem 2rem;
+      position: relative;
+      background: linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.55)), 
+                  url('https://primary.jwwb.nl/pexels/62/6235657.jpeg') center/cover no-repeat;
+      color: #ffffff;
       text-align: center;
+      padding: 6rem 2rem;
     }
 
     .hero-content {
-      max-width: 800px;
+      max-width: 900px;
       margin: 0 auto;
     }
 
     .hero h1 {
       font-size: 2.2rem;
-      color: var(--primary-color);
-      margin-bottom: 1rem;
+      margin-bottom: 1.5rem;
+      line-height: 1.3;
     }
 
     .hero p {
       font-size: 1.1rem;
       margin-bottom: 2rem;
-      color: #4a5568;
+      font-weight: 400;
     }
 
-    /* Servicios */
-    .services {
+    .btn-main {
+      display: inline-block;
+      background-color: var(--accent-color);
+      color: #ffffff;
+      padding: 0.8rem 2rem;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 1rem;
+      border: none;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .btn-main:hover {
+      background-color: #219150;
+    }
+
+    /* Sección de Servicios */
+    .services-section {
       padding: 4rem 2rem;
-      max-width: 1100px;
+      max-width: 1200px;
       margin: 0 auto;
     }
 
-    .services h2 {
+    .services-section h2 {
       text-align: center;
-      font-size: 1.8rem;
-      margin-bottom: 3rem;
-      color: var(--primary-color);
-    }
-
-    .grid-services {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 2rem;
-    }
-
-    .card {
-      background: #ffffff;
-      border: 1px solid #e2e8f0;
-      border-radius: 8px;
-      padding: 2rem;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.02);
-    }
-
-    .card h3 {
+      font-size: 2rem;
       color: var(--primary-color);
       margin-bottom: 1rem;
     }
 
-    /* Caja de Pago */
-    .pricing-section {
-      background-color: var(--light-bg);
-      padding: 4rem 2rem;
+    .services-intro {
       text-align: center;
+      max-width: 800px;
+      margin: 0 auto 3rem auto;
+      color: #555;
     }
 
-    .pricing-card {
-      background: white;
-      border-radius: 12px;
-      padding: 2.5rem;
-      max-width: 450px;
-      margin: 0 auto;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.08);
-      border: 2px solid var(--secondary-color);
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2.5rem;
     }
 
-    .price {
-      font-size: 2.5rem;
-      font-weight: bold;
-      color: var(--secondary-color);
-      margin: 1rem 0;
+    .service-card {
+      background: #ffffff;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+      display: flex;
+      flex-direction: column;
     }
 
-    .btn-pay {
-      background-color: var(--accent-color);
-      color: white;
+    .service-card img {
       width: 100%;
-      padding: 1rem;
+      height: 220px;
+      object-fit: cover;
+    }
+
+    .card-body {
+      padding: 1.8rem;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+    }
+
+    .card-body h3 {
+      font-size: 1.3rem;
+      color: var(--primary-color);
+      margin-bottom: 1rem;
+    }
+
+    .card-body p {
+      color: #666;
+      font-size: 0.95rem;
+      margin-bottom: 1.5rem;
+      flex-grow: 1;
+    }
+
+    .btn-small {
+      display: inline-block;
+      background-color: var(--accent-color);
+      color: #ffffff;
+      padding: 0.6rem 1.2rem;
+      border-radius: 4px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 0.9rem;
+      text-align: center;
+      border: none;
+      cursor: pointer;
+    }
+
+    /* Modal emergente para Stripe */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 2000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.6);
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal-content {
+      background-color: #ffffff;
+      padding: 2.5rem;
+      border-radius: 10px;
+      max-width: 480px;
+      width: 90%;
+      text-align: center;
+      position: relative;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    }
+
+    .close-btn {
+      position: absolute;
+      right: 20px;
+      top: 15px;
+      font-size: 1.8rem;
+      cursor: pointer;
+      color: #aaa;
+    }
+
+    .btn-stripe {
+      background-color: var(--stripe-btn-color);
+      color: #ffffff;
+      width: 100%;
+      padding: 0.9rem;
       border: none;
       border-radius: 6px;
-      font-size: 1.1rem;
-      font-weight: bold;
+      font-size: 1.05rem;
+      font-weight: 700;
       cursor: pointer;
       margin-top: 1.5rem;
-      transition: background 0.2s;
     }
 
-    .btn-pay:hover {
-      background-color: #4b45c6;
-    }
-
-    /* Pie de página */
     footer {
-      background-color: var(--primary-color);
-      color: white;
+      background: var(--primary-color);
+      color: #ffffff;
       text-align: center;
       padding: 2rem;
+      margin-top: 4rem;
       font-size: 0.9rem;
     }
   </style>
@@ -192,67 +259,92 @@
 
   <!-- Navegación -->
   <header>
-    <nav>
+    <div class="nav-container">
       <a href="#" class="logo">Consultas Veterinarias Online</a>
-      <ul class="nav-links">
-        <li><a href="#servicios">Servicios</a></li>
-        <li><a href="#agendar">Agendar Cita</a></li>
+      <ul class="nav-menu">
+        <li><a href="#inicio">Inicio</a></li>
+        <li><a href="#servicios">Nuestros Servicios</a></li>
       </ul>
-      <a href="#agendar" class="btn-header">Agendar Consulta</a>
-    </nav>
+    </div>
   </header>
 
   <!-- Banner Principal -->
-  <section class="hero">
+  <section class="hero" id="inicio">
     <div class="hero-content">
-      <h1>Atención Veterinaria Profesional desde Casa</h1>
-      <p>Atención personalizada por videollamada para perros y gatos. Evaluación de síntomas, revisión de exámenes, orientación médica y segundas opiniones.</p>
+      <h1>Orientación Veterinaria Profesional para Perros y Gatos en Español</h1>
+      <p>Recibe orientación veterinaria profesional desde cualquier lugar. Ayudamos a propietarios de perros y gatos a comprender mejor los síntomas, tratamientos, exámenes de laboratorio, radiografías y otros estudios diagnósticos. También ofrecemos segunda opinión veterinaria y apoyo en la toma de decisiones para la salud de tu mascota.</p>
+      <button class="btn-main" onclick="openCheckout()">Agendar Consulta</button>
     </div>
   </section>
 
-  <!-- Servicios -->
-  <section class="services" id="servicios">
+  <!-- Sección de Servicios -->
+  <section class="services-section" id="servicios">
     <h2>Nuestros Servicios</h2>
-    <div class="grid-services">
-      <div class="card">
-        <h3>Consulta General</h3>
-        <p>Orientación sobre síntomas leves, cambios de conducta, dudas de alimentación y cuidados preventivos para tu mascota.</p>
+    <p class="services-intro">Ofrecemos consultas veterinarias online y segundas opiniones para propietarios de perros y gatos. Nuestro objetivo es ayudarte a comprender mejor los síntomas, exámenes y opciones de tratamiento de tu mascota desde la comodidad de tu hogar.</p>
+
+    <div class="services-grid">
+      <!-- Tarjeta 1 -->
+      <div class="service-card">
+        <img src="https://primary.jwwb.nl/pexels/89/8939517.jpeg" alt="Consulta Veterinaria Online">
+        <div class="card-body">
+          <h3>Consulta Veterinaria Online</h3>
+          <p>Describe los síntomas de tu mascota y recibe orientación profesional por videollamada. Ideal para dudas sobre problemas digestivos, dermatológicos, comportamiento, nutrición y bienestar general.</p>
+          <button class="btn-small" onclick="openCheckout()">Agendar consulta</button>
+        </div>
       </div>
-      <div class="card">
-        <h3>Lectura de Exámenes</h3>
-        <p>Análisis y explicación detallada de exámenes de sangre, radiografías o ecografías previamente realizadas.</p>
+
+      <!-- Tarjeta 2 -->
+      <div class="service-card">
+        <img src="https://primary.jwwb.nl/pexels/71/7195319.jpeg" alt="Segunda Opinión Veterinaria">
+        <div class="card-body">
+          <h3>Segunda Opinión Veterinaria</h3>
+          <p>¿Tienes dudas sobre un diagnóstico o tratamiento? Revisamos exámenes, radiografías, ecografías e informes médicos para ayudarte a tomar decisiones informadas sobre la salud de tu mascota.</p>
+          <button class="btn-small" onclick="openCheckout()">Agendar consulta</button>
+        </div>
       </div>
-      <div class="card">
-        <h3>Segunda Opinión</h3>
-        <p>Aclaración de diagnósticos complejos y revisión detallada de tratamientos o medicamentos vigentes.</p>
+
+      <!-- Tarjeta 3 -->
+      <div class="service-card">
+        <img src="https://primary.jwwb.nl/pexels/52/5215005.jpeg" alt="Revisión de Exámenes">
+        <div class="card-body">
+          <h3>Revisión de Exámenes</h3>
+          <p>Interpretación de hemogramas, química sanguínea, radiografías y otros estudios diagnósticos enviados por el propietario.</p>
+          <button class="btn-small" onclick="openCheckout()">Agendar consulta</button>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- Bloque de Pago -->
-  <section class="pricing-section" id="agendar">
-    <div class="pricing-card">
-      <h2>Confirmar Cita Veterinaria</h2>
-      <p>Duración: 30 minutos (vía Google Meet)</p>
-      <div class="price">$30.00 USD</div>
-      <p style="font-size: 0.9rem; color: #666;">Pago seguro procesado por Stripe</p>
+  <!-- Ventana emergente para Pago (Modal) -->
+  <div id="checkout-modal" class="modal">
+    <div class="modal-content">
+      <span class="close-btn" onclick="closeCheckout()">&times;</span>
+      <h2 style="color: var(--primary-color);">Confirmar Cita Veterinaria</h2>
+      <p style="margin-top: 10px; color: #555;">Duración: 30 minutos (vía Google Meet)</p>
+      <h3 style="margin-top: 15px; color: var(--accent-color); font-size: 1.8rem;">Total: $30.00 USD</h3>
       
-      <!-- Botón de Pago Stripe -->
-      <button id="stripe-pay-btn" class="btn-pay">Pagar $30.00 USD y Agendar</button>
+      <button id="stripe-checkout-btn" class="btn-stripe">Pagar con Tarjeta</button>
     </div>
-  </section>
+  </div>
 
   <!-- Pie de página -->
   <footer>
     <p>&copy; 2026 Consultas Veterinarias Online. Todos los derechos reservados.</p>
   </footer>
 
-  <!-- Script de Stripe -->
+  <!-- Script de Pago con Stripe -->
   <script>
+    function openCheckout() {
+      document.getElementById('checkout-modal').style.display = 'flex';
+    }
+
+    function closeCheckout() {
+      document.getElementById('checkout-modal').style.display = 'none';
+    }
+
     const stripe = Stripe('pk_live_51TwBDzHpeiwBwnBp9yKfpE0bJRGnPTRPWrqCCnbOSkJV6HSPTYvsJQqgZW0tlouLUFKHCSbEs8lG7xHqH4IEELb0009AFDUUg0');
 
-    document.getElementById('stripe-pay-btn').addEventListener('click', async () => {
-      // Reemplaza 'price_XXXXX' con el Price ID de tu producto en Stripe
+    document.getElementById('stripe-checkout-btn').addEventListener('click', async () => {
       const { error } = await stripe.redirectToCheckout({
         lineItems: [{ price: 'TU_PRICE_ID_AQUI', quantity: 1 }],
         mode: 'payment',
